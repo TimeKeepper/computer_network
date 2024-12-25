@@ -4,6 +4,7 @@
 - Is this the Ethernet address of gaia.cs.umass.edu?  obviously not
 - What device has this as its Ethernet address? ProxmoxServe_76:64:d4 
 - Give the hexadecimal value for the two-byte Frame type field. What upper layer protocol does this correspond to? 0x0800, IPv4
+
 ![alt text](image-1.png)
 - How many bytes from the very start of the Ethernet frame does the ASCII “G” in “GET” appear in the Ethernet frame? 54 bytes
 ![alt text](image-2.png)
@@ -15,6 +16,7 @@
 - Give the hexadecimal value for the two-byte Ethernet Frame type field. What upper layer protocol does this correspond to? 0x0806 ARP
 - 13. Now find the ARP reply that was sent in response to the ARP request. 
 - a) How many bytes from the very beginning of the Ethernet frame does the ARP opcode field begin? 
+
 ![alt text](image-3.png)
 20
 - b) What is the value of the opcode field within the ARP-payload part of the Ethernet frame in which an ARP response is made?
