@@ -10,30 +10,7 @@ import random
 import heapq
 from tqdm import tqdm
 import time
-
-def generate_random_graph_nx(min_nodes, max_nodes, min_edges, max_edges, weight_range=(1, 100)):
-    n_nodes = random.randint(min_nodes, max_nodes)
-    max_possible_edges = n_nodes * (n_nodes - 1) // 2 
-    
-    n_edges = min(random.randint(min_edges, max_edges), max_possible_edges)
-
-    if n_edges == 0 or n_nodes <= 1:
-        G = nx.Graph()
-        G.add_nodes_from(range(n_nodes))
-        return G
-
-    G = nx.Graph()
-    G.add_nodes_from(range(n_nodes))
-
-    all_possible_edges = [(u, v) for u in range(n_nodes) for v in range(u + 1, n_nodes)]
-    random.shuffle(all_possible_edges)
-
-    for u, v in all_possible_edges[:n_edges]:
-        weight = random.randint(*weight_range)
-        G.add_edge(u, v, weight=weight)
-
-    return G
-
+import graph_generator
 
 def dijkstra(graph, start_node):
     distances = {node: float('inf') for node in graph}
@@ -60,7 +37,7 @@ def dijkstra(graph, start_node):
     return distances, paths
 
 
-def run_tests(num_tests, min_nodes=5, max_nodes=15, min_edges=5, max_edges=25, weight_range=(1, 50), is_required_pathMatch=False, use_time_as_seed = False):
+def UnitTest_dijkstra(num_tests, min_nodes=5, max_nodes=15, min_edges=5, max_edges=25, weight_range=(1, 50), is_required_pathMatch=False, use_time_as_seed = False):
     if use_time_as_seed:
         random.seed(int(time.time()))
     else:
@@ -70,7 +47,7 @@ def run_tests(num_tests, min_nodes=5, max_nodes=15, min_edges=5, max_edges=25, w
 
     pbar = tqdm(total=num_tests, desc="Running tests")
     for test_id in range(1, num_tests + 1):
-        graph = generate_random_graph_nx(min_nodes, max_nodes, min_edges, max_edges, weight_range)
+        graph = graph_generator.generate_random_graph_nx(min_nodes, max_nodes, min_edges, max_edges, weight_range)
         start_node = random.randint(0, len(graph.nodes) - 1)
 
         nx_distances, nx_paths = nx.single_source_dijkstra(graph, start_node)
@@ -107,6 +84,6 @@ def run_tests(num_tests, min_nodes=5, max_nodes=15, min_edges=5, max_edges=25, w
 if __name__ == "__main__":
     n = int(input("Enter the test times: "))
 
-    n = run_tests(num_tests = n, is_required_pathMatch = True, use_time_as_seed = True)
+    n = UnitTest_dijkstra(num_tests = n, is_required_pathMatch = False, use_time_as_seed = True)
 
     print(f"Path unmatch times: {n}")
